@@ -37,6 +37,13 @@ spec:
           - "/etc/redis/redis.conf"
           - "--protected-mode"
           - "no"
+          - --cluster-announce-ip
+          - "$(MY_POD_IP)"
+        env:
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP    
         resources:
           requests:
             cpu: "100m"
