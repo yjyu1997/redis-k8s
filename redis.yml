@@ -32,6 +32,7 @@ spec:
       - name: redis
         image: "redis:latest"
         command:
+          - "/etc/redis/update-node.sh"
           - "redis-server"
         args:
           - "/etc/redis/redis.conf"
@@ -64,9 +65,12 @@ spec:
       - name: "redis-conf"
         configMap:
           name: "redis-conf"
+          defaultMode: 0755
           items:
             - key: "redis.conf"
               path: "redis.conf"
+            - key: "update-node.sh"
+              path: "update-node.sh"    
   volumeClaimTemplates:
   - metadata:
       name: redis-data
@@ -76,4 +80,4 @@ spec:
       accessModes: [ "ReadWriteMany" ]
       resources:
         requests:
-          storage: 200M
+          storage: 1Gi
